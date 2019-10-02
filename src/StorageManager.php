@@ -15,9 +15,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Overtrue\LaravelUEditor\Events\Catched;
-use Overtrue\LaravelUEditor\Events\Uploaded;
-use Overtrue\LaravelUEditor\Events\Uploading;
+use Codingyu\LaravelUEditor\Events\Catched;
+use Codingyu\LaravelUEditor\Events\Uploaded;
+use Codingyu\LaravelUEditor\Events\Uploading;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
