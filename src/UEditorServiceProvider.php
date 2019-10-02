@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Overtrue\LaravelUEditor;
+namespace Codingyu\LaravelUEditor;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Storage;
@@ -27,20 +27,20 @@ class UEditorServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'ueditor');
-        $this->loadTranslationsFrom(__DIR__.'/translations', 'ueditor');
+        $this->loadViewsFrom(__DIR__ . '/views', 'ueditor');
+        $this->loadTranslationsFrom(__DIR__ . '/translations', 'ueditor');
 
         $this->publishes([
-            __DIR__.'/config/ueditor.php' => config_path('ueditor.php'),
+            __DIR__ . '/config/ueditor.php' => config_path('ueditor.php'),
         ], 'config');
 
         $this->publishes([
-            __DIR__.'/assets/ueditor' => public_path('vendor/ueditor'),
+            __DIR__ . '/assets/ueditor' => public_path('vendor/ueditor'),
         ], 'assets');
 
         $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/vendor/ueditor'),
-            __DIR__.'/translations' => base_path('resources/lang/vendor/ueditor'),
+            __DIR__ . '/views' => base_path('resources/views/vendor/ueditor'),
+            __DIR__ . '/translations' => base_path('resources/lang/vendor/ueditor'),
         ], 'resources');
 
         $this->registerRoute($router);
@@ -51,7 +51,7 @@ class UEditorServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/ueditor.php', 'ueditor');
+        $this->mergeConfigFrom(__DIR__ . '/config/ueditor.php', 'ueditor');
         $this->app->singleton('ueditor.storage', function ($app) {
             return new StorageManager(Storage::disk($app['config']->get('ueditor.disk', 'public')));
         });

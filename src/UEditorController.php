@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Overtrue\LaravelUEditor;
+namespace Codingyu\LaravelUEditor;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -28,19 +28,21 @@ class UEditorController extends Controller
             case 'config':
                 return config('ueditor.upload');
 
-            // lists
+                // lists
             case $upload['imageManagerActionName']:
                 return $storage->listFiles(
                     $upload['imageManagerListPath'],
                     $request->get('start'),
                     $request->get('size'),
-                    $upload['imageManagerAllowFiles']);
+                    $upload['imageManagerAllowFiles']
+                );
             case $upload['fileManagerActionName']:
                 return $storage->listFiles(
                     $upload['fileManagerListPath'],
                     $request->get('start'),
                     $request->get('size'),
-                    $upload['fileManagerAllowFiles']);
+                    $upload['fileManagerAllowFiles']
+                );
             case $upload['catcherActionName']:
                 return $storage->fetch($request);
             default:

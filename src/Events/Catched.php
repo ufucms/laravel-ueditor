@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Overtrue\LaravelUEditor\Events;
+namespace Codingyu\LaravelUEditor\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @author yueziii <i@yueziii.com>
  */
-class Catched 
+class Catched
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

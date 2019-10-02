@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Overtrue\LaravelUEditor;
+namespace Codingyu\LaravelUEditor;
 
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local as LocalAdapter;
@@ -68,7 +68,8 @@ trait UrlResolverTrait
     protected function getAwsUrl($adapter, $path)
     {
         return $adapter->getClient()->getObjectUrl(
-            $adapter->getBucket(), $adapter->getPathPrefix().$path
+            $adapter->getBucket(),
+            $adapter->getPathPrefix() . $path
         );
     }
 
@@ -87,10 +88,10 @@ trait UrlResolverTrait
         // it as the base URL instead of the default path. This allows the developer to
         // have full control over the base path for this filesystem's generated URLs.
         if ($config->has('url')) {
-            return rtrim($config->get('url'), '/').'/'.ltrim($path, '/');
+            return rtrim($config->get('url'), '/') . '/' . ltrim($path, '/');
         }
 
-        $path = '/storage/'.ltrim($path, '/');
+        $path = '/storage/' . ltrim($path, '/');
 
         // If the path contains "storage/public", it probably means the developer is using
         // the default disk to generate the path instead of the "public" disk like they

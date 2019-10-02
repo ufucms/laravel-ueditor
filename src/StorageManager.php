@@ -9,14 +9,16 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Overtrue\LaravelUEditor;
+namespace Codingyu\LaravelUEditor;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Overtrue\LaravelUEditor\Events\Catched;
 use Overtrue\LaravelUEditor\Events\Uploaded;
 use Overtrue\LaravelUEditor\Events\Uploading;
-use Overtrue\LaravelUEditor\Events\Catched;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -121,8 +123,8 @@ class StorageManager
         }
 
         $response = [
-            'state'=> count($list) ? 'SUCCESS':'ERROR',
-            'list'=> $list
+            'state' => count($list) ? 'SUCCESS' : 'ERROR',
+            'list' => $list
         ];
 
         return response()->json($response);
@@ -267,8 +269,10 @@ class StorageManager
             $error = $file->getError();
         } elseif ($file->getSize() > $config['max_size']) {
             $error = 'upload.ERROR_SIZE_EXCEED';
-        } elseif (!empty($config['allow_files']) &&
-            !in_array('.'.$file->getClientOriginalExtension(), $config['allow_files'])) {
+        } elseif (
+            !empty($config['allow_files']) &&
+            !in_array('.' . $file->getClientOriginalExtension(), $config['allow_files'])
+        ) {
             $error = 'upload.ERROR_TYPE_NOT_ALLOWED';
         }
 
@@ -285,9 +289,9 @@ class StorageManager
      */
     protected function getFilename(UploadedFile $file, array $config)
     {
-        $ext = '.'.$file->getClientOriginalExtension();
+        $ext = '.' . $file->getClientOriginalExtension();
 
-        $filename = config('ueditor.hash_filename') ? md5($file->getFilename()).$ext : $file->getClientOriginalName();
+        $filename = config('ueditor.hash_filename') ? md5($file->getFilename()) . $ext : $file->getClientOriginalName();
 
         return $this->formatPath($config['path_format'], $filename);
     }
@@ -311,13 +315,13 @@ class StorageManager
         $config = [];
 
         foreach ($prefixes as $prefix) {
-            if ($action == $upload[$prefix.'ActionName']) {
+            if ($action == $upload[$prefix . 'ActionName']) {
                 $config = [
-                    'action' => array_get($upload, $prefix.'ActionName'),
-                    'field_name' => array_get($upload, $prefix.'FieldName'),
-                    'max_size' => array_get($upload, $prefix.'MaxSize'),
-                    'allow_files' => array_get($upload, $prefix.'AllowFiles', []),
-                    'path_format' => array_get($upload, $prefix.'PathFormat'),
+                    'action' => Arr::get($upload, $prefix . 'ActionName'),
+                    'field_name' => Arr::get($upload, $prefix . 'FieldName'),
+                    'max_size' => Arr::get($upload, $prefix . 'MaxSize'),
+                    'allow_files' => Arr::get($upload, $prefix . 'AllowFiles', []),
+                    'path_format' => Arr::get($upload, $prefix . 'PathFormat'),
                 ];
 
                 break;
@@ -359,8 +363,8 @@ class StorageManager
             $path = preg_replace('/\{rand\:[\d]*\}/i', str_pad(mt_rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT), $path);
         }
 
-        if (!str_contains($path, $filename)) {
-            $path = str_finish($path, '/').$filename;
+        if (!Str::contains($path, $filename)) {
+            $path = Str::finish($path, '/') . $filename;
         }
 
         return $path;
