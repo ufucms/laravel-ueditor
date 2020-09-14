@@ -5,7 +5,7 @@ UEditor integration for Laravel 5.
 ## 安装
 
 ```shell
-$ composer require "codingyu/laravel-ueditor:~2.0"
+$ composer require ufucms/laravel-ueditor:'dev-master'
 ```
 
 ## 配置
@@ -31,7 +31,10 @@ $ composer require "codingyu/laravel-ueditor:~2.0"
     <script type="text/javascript">
         var ue = UE.getEditor('container');
         ue.ready(function() {
-            ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+            ue.execCommand('serverparam', {
+              'imageTabs': ['remote','upload'], // 设置多图上传选项卡 默认全部显示 数组选项为data-content-id
+              '_token': '{{ csrf_token() }}' // 设置 CSRF token.
+            }); 
         });
     </script>
 

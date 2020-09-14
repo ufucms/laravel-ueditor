@@ -21,6 +21,15 @@
     /* 初始化tab标签 */
     function initTabs() {
         var tabs = $G('tabhead').children;
+        var param = editor.queryCommandValue('serverparam');
+        if(param.imageTabs){
+            Array.from(tabs).forEach(function(item) {
+                var contentId = item.getAttribute('data-content-id');
+                if(param.imageTabs.indexOf(contentId) == -1){
+                    item.remove();
+                }
+            });
+        }
         for (var i = 0; i < tabs.length; i++) {
             domUtils.on(tabs[i], "click", function (e) {
                 var target = e.target || e.srcElement;
